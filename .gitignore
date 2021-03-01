@@ -1,0 +1,13 @@
+node_modules/
+ios/
+android/
+__tests__/
+.buckconfig
+.eslintrc.js
+.flowconfig
+.prettierrc.js
+.watchmanconfig
+app.json
+babel.config.js
+metro.config.js
+package-lock.json

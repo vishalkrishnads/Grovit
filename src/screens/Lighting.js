@@ -16,6 +16,41 @@ export default Lighting = ({ route, navigation }) => {
     let [ON, setON] = React.useState(false);
     let [OFF, setOFF] = React.useState(false);
     let [Auto, setAuto] = React.useState(false);
+    let [id, set_id] = React.useState('');
+    let [apikey, set_apikey] = React.useState('')
+    const switch_map = {
+        "ON": {
+            "hook": ON,
+            "value": '1',
+            "change": (function run() {
+                setAuto(false)
+                setOFF(false)
+                setON(true)
+            }),
+            "error": `Cannot turn ON your lights as we lost connection with your house.`
+        },
+        "OFF": {
+            "hook": OFF,
+            "value": '0',
+            "change": (function run() {
+                setAuto(false)
+                setON(false)
+                setOFF(true)
+            }),
+            "error": `Cannot turn OFF your light as we lost connection with your house.`
+        },
+        "Auto": {
+            "hook": Auto,
+            "value": '0.5',
+            "change": (function run() {
+                setON(false)
+                setOFF(false)
+                setAuto(true)
+            }),
+            "error": `Cannot switch your light to Auto as we lost connection with your house.`
+        }
+    }
+    const value_map = { '1': "ON", '0': "OFF", '0.5': "Auto" }
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             db.transaction((tx) => {
@@ -25,75 +60,33 @@ export default Lighting = ({ route, navigation }) => {
                     (tx, results) => {
                         var len = results.rows.length;
                         if (len > 0) {
-                            apikey = results.rows.item(0).api_key
-                            id = results.rows.item(0).id;
-                            if (id === '1275162') {
-                                fetch('http://68.183.81.209/1')
-                                    .then((response) => response.json())
-                                    .then((js) => {
-                                        console.log("Light Switch Value: " + js)
-                                        fetch('http://68.183.81.209/4')
-                                            .then((res) => res.json())
-                                            .then((json) => {
-                                                console.log("Day night status value: " + json)
-                                                if (json === 1) {
-                                                    set_color(true)
-                                                } else if (json === 0) {
-                                                    set_color(false)
-                                                }
-                                            })
-                                        if (js === 1) {
-                                            setON(true)
-                                        } else if (js === 0) {
-                                            setOFF(true)
-                                        } else if (js === 3) {
-                                            setAuto(true)
-                                        }
-                                        setLoaded(true);
-                                    }).catch(() => {
-                                        Alert.alert(
-                                            'Error',
-                                            'Cannot connect to house. Please check your internet connection',
-                                            [
-                                                {
-                                                    text: 'Okay',
-                                                    style: 'destructive',
-                                                    onPress: () => [
-                                                        navigation.goBack(),
-                                                    ],
-                                                },
-                                            ]
-                                        );
-                                    })
-                            } else {
-                                fetch('https://api.thingspeak.com/channels/1275162/fields/1/last.json?api_key=' + apikey)
-                                    .then((response) => response.json())
-                                    .then((json) => {
-                                        console.log("Light Switch value: " + json.field1)
-                                        if (json.field1 === '1') {
-                                            setON(true)
-                                        } else if (json.field1 === '0') {
-                                            setOFF(true)
-                                        } else if (json.field1 === '3') {
-                                            setAuto(true)
-                                        }
-                                        setLoaded(true);
-                                    }).catch(() => {
-                                        Alert.alert(
-                                            'Error',
-                                            'Cannot connect to house. Please check your internet connection',
-                                            [
-                                                {
-                                                    text: 'Okay',
-                                                    style: 'destructive',
-                                                    onPress: () => [
-                                                        navigation.goBack(),
-                                                    ],
-                                                },
-                                            ]
-                                        );
-                                    })
-                            }
+                            set_apikey(results.rows.item(0).api_key)
+                            set_id(results.rows.item(0).id);
+                            fetch(`https://api.thingspeak.com/channels/${results.rows.item(0).id}/fields/2/last.json?api_key=${results.rows.item(0).api_key}`)
+                                .then((response) => response.json())
+                                .then((json) => {
+                                    fetch(`https://api.thingspeak.com/channels/${results.rows.item(0).id}/fields/4/last.json?api_key=${results.rows.item(0).api_key}`)
+                                        .then((res) => res.json())
+                                        .then((jn) => {
+                                            switch_map[value_map[json.field2]].change()
+                                            jn.field4 === '1' ? set_color(true) : set_color(false)
+                                            setLoaded(true);
+                                        }).catch(() => { })
+                                }).catch(() => {
+                                    Alert.alert(
+                                        'Error',
+                                        'Cannot connect to house. Please check your internet connection',
+                                        [
+                                            {
+                                                text: 'Okay',
+                                                style: 'destructive',
+                                                onPress: () => [
+                                                    navigation.goBack(),
+                                                ],
+                                            },
+                                        ]
+                                    );
+                                })
                         } else {
                             Alert.alert('No such house enrolled');
                         }
@@ -105,212 +98,66 @@ export default Lighting = ({ route, navigation }) => {
     }, [route, navigation])
     const refresh = () => {
         setLoaded(false)
-        if (id === "1275162") {
-            fetch('http://68.183.81.209/1')
-                .then((response) => response.json())
-                .then((json) => {
-                    console.log("Light Switch Value: " + json)
-                    fetch('http://68.183.81.209/4')
-                        .then((res) => res.json())
-                        .then((js) => {
-                            if (js === 1) {
-                                set_color(true)
-                            } else if (js === 0) {
-                                set_color(false)
-                            }
-                        })
-                    if (json === 1) {
-                        setOFF(false)
-                        setAuto(false)
-                        setON(true)
-                    } else if (json === 0) {
-                        setON(false)
-                        setAuto(false)
-                        setOFF(true)
-                    } else if (json === 3) {
-                        setON(false)
-                        setOFF(false)
-                        setAuto(true)
-                    }
-                    setLoaded(true);
-                    setRefreshing(false)
-                }).catch(() => {
-                    Alert.alert(
-                        'Error',
-                        'Cannot connect to house. Please check your internet connection',
-                        [
-                            {
-                                text: 'Okay',
-                                style: 'destructive',
-                                onPress: () => [
-                                    navigation.goBack(),
-                                ],
-                            },
-                        ]
-                    );
-                })
-        } else {
-            fetch('https://api.thingspeak.com/channels/1275162/fields/1/last.json?api_key=' + apikey)
-                .then((response) => response.json())
-                .then((json) => {
-                    console.log("Light Switch value: " + json.field1)
-                    if (json.field1 === '1') {
-                        setOFF(false)
-                        setAuto(false)
-                        setON(true)
-                    } else if (json.field1 === '0') {
-                        setON(false)
-                        setAuto(false)
-                        setOFF(true)
-                    } else if (json.field1 === '3') {
-                        setON(false)
-                        setOFF(false)
-                        setAuto(true)
-                    }
-                    setLoaded(true);
-                    setRefreshing(false);
-                }).catch(() => {
-                    Alert.alert(
-                        'Error',
-                        'Cannot connect to house. Please check your internet connection',
-                        [
-                            {
-                                text: 'Okay',
-                                style: 'destructive',
-                                onPress: () => [
-                                    navigation.goBack(),
-                                ],
-                            },
-                        ]
-                    );
-                })
-        }
+        fetch(`https://api.thingspeak.com/channels/${id}/fields/2/last.json?api_key=${apikey}`)
+            .then((response) => response.json())
+            .then((json) => {
+                fetch(`https://api.thingspeak.com/channels/${results.rows.item(0).id}/fields/4/last.json?api_key=${results.rows.item(0).api_key}`)
+                    .then((res) => res.json())
+                    .then((jn) => {
+                        switch_map[value_map[json.field2]].change()
+                        jn.field4 === '1' ? set_color(true) : set_color(false)
+                        setLoaded(true);
+                        setRefreshing(false);
+                    }).catch(() => { })
+            }).catch(() => {
+                Alert.alert(
+                    'Error',
+                    'Cannot connect to house. Please check your internet connection',
+                    [
+                        {
+                            text: 'Okay',
+                            style: 'destructive',
+                            onPress: () => [
+                                navigation.goBack(),
+                            ],
+                        },
+                    ]
+                );
+            })
     }
     const switch_handler = (fn) => {
         setChanging(true)
-        if (id === '1275162') {
-            if (fn === "ON") {
-                if (ON) { switch_handler("OFF") } else {
-                    fetch('http://68.183.81.209/write/1?value=1')
-                        .then(() => {
-                            setAuto(false)
-                            setOFF(false)
-                            setON(true)
-                        })
-                }
-            } else if (fn === "OFF") {
-                if (OFF) { } else {
-                    fetch('http://68.183.81.209/write/1?value=0')
-                        .then(() => {
-                            setAuto(false)
-                            setON(false)
-                            setOFF(true)
-                        })
-                }
-            } else if (fn === "Auto") {
-                if (Auto) { switch_handler("OFF") } else {
-                    fetch('http://68.183.81.209/write/1?value=3')
-                        .then(() => {
-                            setOFF(false)
-                            setON(false)
-                            setAuto(true)
-                        })
-                }
-            }
-        } else {
-            if (fn === "ON") {
-                if (ON) { switch_handler("OFF") } else {
-                    fetch('https://api.thingspeak.com/update?api_key=' + apikey + '&field1=1')
-                        .then((response) => response.json())
-                        .then((json) => {
-                            fetch('https://api.thingspeak.com/channels/1275162/fields/1/last.json?api_key=' + apikey)
-                                .then((res) => res.json())
-                                .then((jn) => {
-                                    if (jn.entry_id == json) {
-                                        setAuto(false)
-                                        setOFF(false)
-                                        setON(true)
-                                    } else { Vibration.vibrate([100, 100, 100, 100]); Alert.alert('Error', "15 second delay window isn't over. Please wait 15 secods before trying again") }
-                                }).catch(() => {
-                                    Alert.alert(
-                                        'Error',
-                                        'Cannot connect to house. Please check your internet connection',
-                                        [
-                                            {
-                                                text: 'Okay',
-                                                style: 'destructive',
-                                                onPress: () => [
-                                                    navigation.goBack(),
-                                                ],
-                                            },
-                                        ]
-                                    );
-                                })
-                        })
-                        .catch(() => Alert.alert('Uh Oh', 'Cannot turn ON your tap as we lost connection with your house.'))
-                }
-            } else if (fn === "OFF") {
-                if (OFF) { } else {
-                    fetch('https://api.thingspeak.com/update?api_key=' + apikey + '&field1=0')
-                        .then((response) => response.json())
-                        .then((json) => {
-                            fetch('https://api.thingspeak.com/channels/1275162/fields/1/last.json?api_key=' + apikey)
-                                .then((res) => res.json())
-                                .then((jn) => {
-                                    if (jn.entry_id == json) {
-                                        setAuto(false)
-                                        setON(false)
-                                        setOFF(true)
-                                    } else { Vibration.vibrate([100, 100, 100, 100]); Alert.alert('Error', "15 second delay window isn't over. Please wait 15 secods before trying again") }
-                                }).catch(() => {
-                                    Alert.alert(
-                                        'Error',
-                                        'Cannot connect to house. Please check your internet connection',
-                                        [
-                                            {
-                                                text: 'Okay',
-                                                style: 'destructive',
-                                                onPress: () => [
-                                                    navigation.goBack(),
-                                                ],
-                                            },
-                                        ]
-                                    );
-                                })
-                        })
-                        .catch(() => Alert.alert('Uh Oh', "Cannot turn OFF your tap as we lost connection with your house. If it's leaking or overflowing water, please diconnect power from the house immediately."))
-                }
-            } else if (fn === "Auto") {
-                if (Auto) { switch_handler("OFF") } else {
-                    fetch('https://api.thingspeak.com/update?api_key=' + apikey + '&field1=0.5')
-                        .then((response) => response.json())
-                        .then((json) => {
-                            fetch('https://api.thingspeak.com/channels/1275162/fields/1/last.json?api_key=' + apikey)
-                                .then((res) => res.json())
-                                .then((jn) => {
-                                    if (jn.entry_id == json) {
-                                        setON(false)
-                                        setOFF(false)
-                                        setAuto(true)
-                                    } else { Vibration.vibrate([100, 100, 100, 100]); Alert.alert('Error', "15 second delay window isn't over. Please wait 15 secods before trying again") }
-                                }).catch(() => {
-                                    Alert.alert(
-                                        'Error',
-                                        'Cannot connect to house. Please check your internet connection',
-                                        [
-                                            {
-                                                text: 'Okay',
-                                                style: 'destructive',
-                                                onPress: () => [
-                                                    navigation.goBack(),
-                                                ],
-                                            },
-                                        ]
-                                    );
-                                })
-                        })
-                        .catch(() => Alert.alert('Uh Oh', "Cannot switch your tap to Auto as we lost connection with your house. If it's leaking or overflowing water, please diconnect power from the house immediately."))
-                }
+        if (switch_map.hasOwnProperty(fn)) {
+            if (switch_map[fn].hook) { switch_handler("OFF") } else {
+                fetch(`https://api.thingspeak.com/update?api_key=${apikey}&field2=${switch_map[fn].value}`)
+                    .then((response) => response.json())
+                    .then((json) => {
+                        fetch(`https://api.thingspeak.com/channels/${id}/fields/2/last.json?api_key=${apikey}`)
+                            .then((res) => res.json())
+                            .then((jn) => {
+                                if (jn.entry_id == json) {
+                                    switch_map[fn].change()
+                                } else {
+                                    Vibration.vibrate([100, 100, 100, 100]);
+                                    Alert.alert('Error', "15 second delay window isn't over. Please wait 15 secods before trying again")
+                                }
+                            }).catch(() => {
+                                Alert.alert(
+                                    'Error',
+                                    'Cannot connect to house. Please check your internet connection',
+                                    [
+                                        {
+                                            text: 'Okay',
+                                            style: 'destructive',
+                                            onPress: () => [
+                                                navigation.goBack(),
+                                            ],
+                                        },
+                                    ]
+                                );
+                            })
+                    })
+                    .catch(() => Alert.alert('Uh Oh', switch_map[fn].error))
             }
         }
         setChanging(false)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, StatusBar } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { WebView } from 'react-native-webview'
 import { openDatabase } from 'react-native-sqlite-storage';
@@ -33,6 +33,10 @@ export default Analytics = ({ route, navigation }) => {
     }, [route, navigation])
     return (
         <ScrollView>
+            <StatusBar
+                animated={true}
+                backgroundColor="white"
+                barStyle="dark-content" />
             <View style={styles.analytics_card}>
                 <View style={styles.analytics_heading_container}>
                     <Icon name={'droplet'} color={'green'} type={'feather'} size={50} />
@@ -43,7 +47,7 @@ export default Analytics = ({ route, navigation }) => {
                         javaScriptEnabled={true}
                         source={{
                             html: `
-                            <iframe width="950" height="420" style="border: 0px solid #cccccc;" src="https://thingspeak.com/channels/`+id+`/charts/3?bgcolor=%23ffffff&color=%23008000&api_key=`+api_key+`&dynamic=true&results=60&type=line&update=15&width=900&height=450"></iframe>
+                            <iframe width="950" height="420" style="border: 0px solid #cccccc;" src="https://thingspeak.com/channels/`+ id + `/charts/3?bgcolor=%23ffffff&color=%23008000&api_key=` + api_key + `&dynamic=true&results=60&type=line&update=15&width=900&height=450"></iframe>
                         `}}
                     />
                 </View>
@@ -58,7 +62,7 @@ export default Analytics = ({ route, navigation }) => {
                         javaScriptEnabled={true}
                         source={{
                             html: `
-                            <iframe width="950" height="420" style="border: 0px solid #cccccc;" src="https://thingspeak.com/channels/`+id+`/charts/1?bgcolor=%23ffffff&color=%23008000&api_key=`+api_key+`&dynamic=true&results=60&type=line&update=15&width=900&height=450"></iframe>
+                            <iframe width="950" height="420" style="border: 0px solid #cccccc;" src="https://thingspeak.com/channels/`+ id + `/charts/1?bgcolor=%23ffffff&color=%23008000&api_key=` + api_key + `&dynamic=true&results=60&type=line&update=15&width=900&height=450"></iframe>
                         `}}
                     />
                 </View>

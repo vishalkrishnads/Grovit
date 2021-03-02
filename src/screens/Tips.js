@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, Image, TouchableOpacity, StatusBar } from 'react-native'
 import { createStackNavigator } from "@react-navigation/stack";
 import TIPS from '../assets/Tips'
 import styles from '../assets/styles'
@@ -7,9 +7,9 @@ import Tips_Elaborated from './Tips-Elaborated'
 
 const Stack = createStackNavigator();
 
-const Content = ({navigation}) => {
+const Content = ({ navigation }) => {
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={()=>navigation.navigate('Tips_Elaborated', {title: item.title, description: item.description, image: item.image})}>
+    <TouchableOpacity onPress={() => navigation.navigate('Tips_Elaborated', { title: item.title, description: item.description, image: item.image })}>
       <View style={styles.tips_card}>
         <View style={{ flex: 2 }}>
           <Image source={item.image} style={styles.tips_card_image} />
@@ -27,6 +27,10 @@ const Content = ({navigation}) => {
   );
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <StatusBar
+        animated={true}
+        backgroundColor="white"
+        barStyle="dark-content" />
       <FlatList
         style={{ margin: 10 }}
         data={TIPS}

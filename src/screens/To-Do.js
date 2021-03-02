@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Modal, Vibration, Keyboard, FlatList, TouchableOpacity, Alert, Dimensions } from 'react-native'
+import { View, Text, Modal, Vibration, Keyboard, FlatList, TouchableOpacity, Alert, Dimensions, StatusBar } from 'react-native'
 import { openDatabase } from 'react-native-sqlite-storage';
 import { OutlinedTextField } from 'react-native-material-textfield';
 import { Button, Icon } from 'react-native-elements';
@@ -32,9 +32,9 @@ export default To_Do = ({ route, navigation }) => {
                 var temp = [];
                 for (let i = 0; i < results.rows.length; ++i)
                     temp.push(results.rows.item(i));
-                    temp.forEach(element=>{
-                        console.log(element.date)
-                    })
+                temp.forEach(element => {
+                    console.log(element.date)
+                })
                 if (typeof temp !== 'undefined' && temp.length > 0) {
                     setFlatListItems(temp.reverse());
                     showMessage(false);
@@ -185,6 +185,10 @@ export default To_Do = ({ route, navigation }) => {
     };
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <StatusBar
+                animated={true}
+                backgroundColor="white"
+                barStyle="dark-content" />
             {message ?
                 <View style={{ flex: 1, alignItems: 'center' }}>
                     <Text style={styles.blank_message}>Click + to add something</Text>

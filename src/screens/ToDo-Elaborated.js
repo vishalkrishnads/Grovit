@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, StatusBar } from 'react-native'
 import { Icon } from 'react-native-elements'
 import styles from '../assets/styles'
 
@@ -14,6 +14,10 @@ export default To_Do_Elaborated = ({ route, navigation }) => {
     dt.setTime(dt1);
     return (
         <ScrollView>
+            <StatusBar
+                animated={true}
+                backgroundColor="white"
+                barStyle="dark-content" />
             <View style={{ flex: 0.5, flexDirection: 'row' }}>
                 <View style={{ flex: 0.7 }}></View>
                 <View style={{ flex: 1, flexDirection: 'row', height: 160 }}>

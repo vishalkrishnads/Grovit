@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, Text, Image, TouchableOpacity, Alert, Vibration } from 'react-native'
+import { ScrollView, View, Text, Image, TouchableOpacity, Alert, Vibration, StatusBar } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Icon, Button } from 'react-native-elements'
 import { openDatabase } from 'react-native-sqlite-storage'
@@ -32,7 +32,7 @@ const Card = ({ name, icon, primary_data, extra_data }) => {
   );
 }
 
-const Content = ({navigation}) => {
+const Content = ({ navigation }) => {
   let [active, setActive] = React.useState('')
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -49,6 +49,10 @@ const Content = ({navigation}) => {
   }, [navigation])
   return (
     <ScrollView>
+      <StatusBar
+        animated={true}
+        backgroundColor="white"
+        barStyle="dark-content" />
       <View style={{ flex: 1, alignItems: 'center' }}>
         <Image source={require('../img/GreenHouse.jpg')} style={styles.profile_pic} />
         <Text style={styles.profile_name}>Raman</Text>
@@ -58,11 +62,11 @@ const Content = ({navigation}) => {
         <Card name={'Crops of interest'} icon={'feather'} primary_data={'Beans'} />
         <Card name={'Active Houses'} icon={'home'} primary_data={active} />
       </View>
-      <View style={{flex: 3}}>
+      <View style={{ flex: 3 }}>
         <Button
-        title={'Sign Out'}
-        onPress={()=>{Vibration.vibrate(40); Alert.alert('Warning', 'This function is temporarily unavailable.')}}
-        buttonStyle={{alignSelf: 'center', width: 100, margin: 10, borderRadius: 50, backgroundColor: global.accent}}
+          title={'Sign Out'}
+          onPress={() => { Vibration.vibrate(40); Alert.alert('Warning', 'This function is temporarily unavailable.') }}
+          buttonStyle={{ alignSelf: 'center', width: 100, margin: 10, borderRadius: 50, backgroundColor: global.accent }}
         />
       </View>
     </ScrollView>

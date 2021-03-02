@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Switch, ScrollView, TouchableOpacity, Alert, RefreshControl, Vibration } from 'react-native';
+import { View, Text, Switch, ScrollView, TouchableOpacity, Alert, RefreshControl, Vibration, StatusBar } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 import * as Progress from 'react-native-progress';
 import { Icon } from 'react-native-elements';
@@ -194,6 +194,10 @@ export default Watering = ({ route, navigation }) => {
         <ScrollView
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); refresh(); }} />}
         >
+            <StatusBar
+                animated={true}
+                backgroundColor="white"
+                barStyle="dark-content" />
             {changing ? <Progress.Bar indeterminate={true} color={'green'} width={600} height={4} borderRadius={0} borderWidth={0} /> : null}
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <View style={styles.progress_container}>

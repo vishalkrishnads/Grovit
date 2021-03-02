@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ScrollView, Image } from 'react-native'
+import { View, Text, ScrollView, Image, StatusBar } from 'react-native'
 import styles from '../assets/styles'
 
 export default Tips_Elaborated = ({ route, navigation }) => {
@@ -8,19 +8,23 @@ export default Tips_Elaborated = ({ route, navigation }) => {
     const { image } = route.params
     return (
         <ScrollView>
+            <StatusBar
+                animated={true}
+                backgroundColor="white"
+                barStyle="dark-content" />
             <View style={{ flex: 0.5, flexDirection: 'row' }}>
                 <View style={{ flex: 0.7 }}></View>
                 <View style={{ flex: 1, flexDirection: 'row', height: 160 }}>
-                    <Image source={image} style={styles.tips_image}/>
+                    <Image source={image} style={styles.tips_image} />
                 </View>
                 <View style={{ flex: 0.7 }}>
                 </View>
             </View>
             <View style={{ flex: 2 }}>
-                <View style={{marginLeft: 10, marginRight: 20}}>
-                    <Text style={[styles.to_do_heading, {fontSize: 22, textAlign: 'center'}]}>{title}</Text>
+                <View style={{ marginLeft: 10, marginRight: 20 }}>
+                    <Text style={[styles.to_do_heading, { fontSize: 22, textAlign: 'center' }]}>{title}</Text>
                 </View>
-                <View style={[styles.to_do_content_holder, {marginTop: 10}]}>
+                <View style={[styles.to_do_content_holder, { marginTop: 10 }]}>
                     <Text style={styles.to_do_content}>{description}</Text>
                 </View>
             </View>

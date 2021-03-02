@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ScrollView, Text, TouchableOpacity, Switch, Alert, RefreshControl, Vibration } from 'react-native'
+import { View, ScrollView, Text, TouchableOpacity, Switch, Alert, RefreshControl, Vibration, StatusBar } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { openDatabase } from 'react-native-sqlite-storage';
 import ProgressBar from 'react-native-progress/Bar';
@@ -193,6 +193,10 @@ export default Lighting = ({ route, navigation }) => {
         <ScrollView
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); refresh(); }} />}
         >
+            <StatusBar
+                animated={true}
+                backgroundColor="white"
+                barStyle="dark-content" />
             {changing ? <ProgressBar indeterminate={true} color={'green'} width={600} height={4} borderRadius={0} borderWidth={0} /> : null}
             <View style={{ flex: 1, margin: 20 }}>
                 <Icon name={'sun'} type={'feather'} size={250} color={Color ? 'green' : 'grey'} />

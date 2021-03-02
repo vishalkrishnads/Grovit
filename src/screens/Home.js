@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Alert, Dimensions, TouchableOpacity, FlatList, Modal, Keyboard, Vibration, ImageBackground } from 'react-native'
+import { View, Text, Alert, Dimensions, TouchableOpacity, FlatList, Modal, Keyboard, Vibration, ImageBackground, StatusBar } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import { OutlinedTextField } from 'react-native-material-textfield';
 import { Button, Icon } from 'react-native-elements';
@@ -203,9 +203,9 @@ const Home = ({ navigation }) => {
                             <Button
                                 buttonStyle={{ backgroundColor: 'transparent', marginTop: 5 }}
                                 icon={
-                                    <Icon name={'mic'} type={'material'} color={'grey'}/>
+                                    <Icon name={'mic'} type={'material'} color={'grey'} />
                                 }
-                                onPress={()=>{title = item.house_name, navigation.navigate('Details', { item: item.house_id, trigger: true })}}
+                                onPress={() => { title = item.house_name, navigation.navigate('Details', { item: item.house_id, trigger: true }) }}
                             />
                         </View>
                         <View style={{ flex: 4 }}>
@@ -230,6 +230,10 @@ const Home = ({ navigation }) => {
     };
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <StatusBar
+                animated={true}
+                backgroundColor="white"
+                barStyle="dark-content" />
             {message ?
                 <View style={{ flex: 1, alignItems: 'center' }}>
                     <Text style={styles.blank_message}>Click + to add something</Text>

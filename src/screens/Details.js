@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, TouchableOpacity, Dimensions, Modal, Vibration } from 'react-native'
+import { View, Text, Image, TouchableOpacity, Dimensions, Modal, Vibration, StatusBar } from 'react-native'
 import { Button, Icon } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { openDatabase } from 'react-native-sqlite-storage';
@@ -80,17 +80,26 @@ export default Details = ({ route, navigation }) => {
                 "field": '1',
                 "value": '0.5',
                 "error": `Uh, oh! I couldn't switch your tap to Auto mode. Please check your connection.`
+            }],
+            "Everything": [{
+                "field": '1',
+                "value": '0.5',
+                "error": `Uh, oh! I couldn't switch your tap to Auto mode. Please check your connection.`
+            }, {
+                "field": '2',
+                "value": '0.5',
+                "error": `Uh, Oh! I couldn't put the lights in Auto mode. Please check your connection`
             }]
         },
         "questions": {
-            "Level": (function run(){
+            "Level": (function run() {
                 fetch(`https://api.thingspeak.com/channels/${id}/fields/3/last.json?api_key=${apikey}`)
-                .then((response) => response.json())
-                .then(json => {
-                    respond(question_response.replace('water_level', `${json.field3} percentage`))
-                }).catch(()=>respond(`Sorry. There seems to be an unknown issue. Please check your connection`))
+                    .then((response) => response.json())
+                    .then(json => {
+                        respond(question_response.replace('water_level', `${json.field3} percentage`))
+                    }).catch(() => respond(`Sorry. There seems to be an unknown issue. Please check your connection`))
             }),
-            "Date": (function run(){
+            "Date": (function run() {
                 respond(question_response.replace("date", moment(date).format("MMMM Do, dddd")))
             })
         }
@@ -158,7 +167,7 @@ export default Details = ({ route, navigation }) => {
             } else if (Grovi.questions.hasOwnProperty(response.queryResult.intent.displayName)) {
                 set_res(response.queryResult.fulfillmentText)
                 Grovi.questions[response.queryResult.intent.displayName]()
-            } 
+            }
             else { respond(response.queryResult.fulfillmentText) }
         } else {
             respond(`Sorry, I'm not confident enough to answer that. Please try again.`)
@@ -176,6 +185,10 @@ export default Details = ({ route, navigation }) => {
     }, [])
     return (
         <View style={{ flex: 1 }}>
+            <StatusBar
+                animated={true}
+                backgroundColor="white"
+                barStyle="dark-content" />
             <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 10 }}>
                 <View style={styles.details_image_container}>
                     <Image

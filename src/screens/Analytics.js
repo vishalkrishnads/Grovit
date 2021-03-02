@@ -3,7 +3,7 @@ import { View, Text, ScrollView } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { WebView } from 'react-native-webview'
 import { openDatabase } from 'react-native-sqlite-storage';
-import styles from '../components/styles'
+import styles from '../assets/styles'
 
 var db = openDatabase({ name: 'GreenHouse.db' });
 

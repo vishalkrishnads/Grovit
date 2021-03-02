@@ -46,12 +46,81 @@ export default Details = ({ route, navigation }) => {
     let [modal, show_modal] = React.useState(false);
     let [message, set_message] = React.useState('')
     let [response, set_response] = React.useState('')
+    let [question_response, set_res] = React.useState('')
+    let [apikey, setapikey] = React.useState('')
+    let [id, setid] = React.useState('')
+    const Grovi = {
+        "actions": {
+            "Lights ON": [{
+                "field": '2',
+                "value": '1',
+                "error": `Oops! I couldn't turn ON the lights. Please check your connection.`
+            }],
+            "Lights OFF": [{
+                "field": '2',
+                "value": '0',
+                "error": `Oh, no! I couldn't turn OFF the lights. Please check your connection.`
+            }],
+            "Lights Auto": [{
+                "field": '2',
+                "value": '0.5',
+                "error": `Uh, Oh! I couldn't put the lights in Auto mode. Please check your connection`
+            }],
+            "Water ON": [{
+                "field": '1',
+                "value": '1',
+                "error": `Oops! I couldn't open your tap. Please check your connection.`
+            }],
+            "Water OFF": [{
+                "field": '1',
+                "value": '0',
+                "error": `Oh no! I couldn't close your tap. Please check your connection. If the device is leaking water, please cut power immediately`
+            }],
+            "Water Auto": [{
+                "field": '1',
+                "value": '0.5',
+                "error": `Uh, oh! I couldn't switch your tap to Auto mode. Please check your connection.`
+            }]
+        },
+        "questions": {
+            "Level": (function run(){
+                fetch(`https://api.thingspeak.com/channels/${id}/fields/3/last.json?api_key=${apikey}`)
+                .then((response) => response.json())
+                .then(json => {
+                    respond(question_response.replace('water_level', `${json.field3} percentage`))
+                }).catch(()=>respond(`Sorry. There seems to be an unknown issue. Please check your connection`))
+            }),
+            "Date": (function run(){
+                respond(question_response.replace("date", moment(date).format("MMMM Do, dddd")))
+            })
+        }
+    }
     React.useEffect(() => {
         if (trigger) {
             show_modal(true)
             listen()
         } else { }
     }, [])
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            db.transaction((tx) => {
+                tx.executeSql(
+                    'SELECT id, api_key FROM Houses where house_id = ?',
+                    [item],
+                    (tx, results) => {
+                        var len = results.rows.length;
+                        if (len > 0) {
+                            setapikey(results.rows.item(0).api_key)
+                            setid(results.rows.item(0).id)
+                        } else {
+                            navigation.goBack();
+                        }
+                    })
+            }
+            )
+        });
+        return unsubscribe;
+    })
     const listen = async () => {
         set_message('')
         set_response('')
@@ -67,19 +136,32 @@ export default Details = ({ route, navigation }) => {
             show_modal(false)
         }
     }
+    const respond = (message) => { set_response(message); Tts.speak(message) }
     const speak = (response) => {
         if (response.queryResult.fulfillmentText) {
-            console.log("Response: " + response.queryResult.fulfillmentText)
-            console.warn("Intent triggered: " + response.queryResult.intent.displayName)
-            switch (response.queryResult.intent.displayName) {
-                default:
-                    set_response(response.queryResult.fulfillmentText)
-                    Tts.speak(response.queryResult.fulfillmentText)
-            }
+            console.log(`Response: ${response.queryResult.fulfillmentText}`)
+            console.warn(`Intent triggered is ${response.queryResult.intent.displayName}`)
+            if (Grovi.actions.hasOwnProperty(response.queryResult.intent.displayName)) {
+                for (const each of Grovi.actions[response.queryResult.intent.displayName]) {
+                    fetch(`https://api.thingspeak.com/update?api_key=${apikey}&field${each.field}=${each.value}`)
+                        .then((response) => response.json())
+                        .then((json) => {
+                            fetch(`https://api.thingspeak.com/channels/${id}/fields/${each.field}/last.json?api_key=${apikey}`)
+                                .then((res) => res.json())
+                                .then((jn) => {
+                                    if (jn.entry_id == json) {
+                                        respond(response.queryResult.fulfillmentText)
+                                    } else { Vibration.vibrate([40, 100, 40, 100]); respond(`Sorry, I tried. But the thing speak 15 second delay window isn't over. This won't happen in a production build.`) }
+                                }).catch(() => respond(each.error))
+                        }).catch(() => respond(each.error))
+                }
+            } else if (Grovi.questions.hasOwnProperty(response.queryResult.intent.displayName)) {
+                set_res(response.queryResult.fulfillmentText)
+                Grovi.questions[response.queryResult.intent.displayName]()
+            } 
+            else { respond(response.queryResult.fulfillmentText) }
         } else {
-            const error_message = "Sorry, I'm not confident enough to answer that. Please try again."
-            set_response(error_message)
-            Tts.speak(error_message)
+            respond(`Sorry, I'm not confident enough to answer that. Please try again.`)
             const evnt = Tts.addEventListener('tts-finish', () => listen());
             return evnt;
         }

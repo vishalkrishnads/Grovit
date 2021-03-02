@@ -187,7 +187,7 @@ export default Details = ({ route, navigation }) => {
         <View style={{ flex: 1 }}>
             <StatusBar
                 animated={true}
-                backgroundColor="white"
+                backgroundColor={modal ? 'rgba(0,0,0,0.5)' : "white"}
                 barStyle="dark-content" />
             <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 10 }}>
                 <View style={styles.details_image_container}>

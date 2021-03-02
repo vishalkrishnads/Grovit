@@ -187,7 +187,7 @@ export default To_Do = ({ route, navigation }) => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <StatusBar
                 animated={true}
-                backgroundColor="white"
+                backgroundColor={prompt?'rgba(0,0,0,0.5)':"white"}
                 barStyle="dark-content" />
             {message ?
                 <View style={{ flex: 1, alignItems: 'center' }}>

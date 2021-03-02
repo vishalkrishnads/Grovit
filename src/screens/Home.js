@@ -250,12 +250,14 @@ const Home = ({ navigation }) => {
                 <View style={{ flex: 15, alignItems: 'center' }}>
                     <Text style={styles.blank_message}>Click + to add something</Text>
                 </View> :
-                <FlatList
-                    style={{ alignSelf: 'stretch', height: 500 }}
-                    data={flatListItems}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item, index }) => listItemView(item, index)}
-                />}
+                <View style={{ flex: 15 }}>
+                    <FlatList
+                        style={{ alignSelf: 'stretch' }}
+                        data={flatListItems}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={({ item, index }) => listItemView(item, index)}
+                    />
+                </View>}
             {ui_patch === 2 ?
                 <View style={styles.bottom}>
                     <Button
@@ -295,6 +297,7 @@ const Home = ({ navigation }) => {
                                     onChangeText={ip => setIP(ip)}
                                     onSubmitEditing={() => KEY.current.focus()}
                                     keyboardType='number-pad'
+                                    returnKeyType="next"
                                     tintColor={global.accent}
                                     maxLength={7}
                                     error={error2}

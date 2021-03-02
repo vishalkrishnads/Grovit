@@ -41,6 +41,7 @@ export default StyleSheet.create({
     },
     loader: {
         alignItems: 'center',
+        marginTop: height/20
     },
     //header end
 

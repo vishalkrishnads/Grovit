@@ -10,19 +10,19 @@ const images = {
     '02d': require('../img/Icons/02d.png'),
     '02n': require('../img/Icons/02n.png'),
     '03d': require('../img/Icons/03d.png'),
-    '03n': require('../img/Icons/03d.png'),
+    '03n': require('../img/Icons/03n.png'),
     '04d': require('../img/Icons/04d.png'),
-    '04n': require('../img/Icons/04d.png'),
+    '04n': require('../img/Icons/04n.png'),
     '09d': require('../img/Icons/09d.png'),
-    '09n': require('../img/Icons/10d.png'),
+    '09n': require('../img/Icons/09n.png'),
     '10d': require('../img/Icons/10d.png'),
     '10n': require('../img/Icons/10n.png'),
     '11d': require('../img/Icons/11d.png'),
-    '11n': require('../img/Icons/11d.png'),
+    '11n': require('../img/Icons/11n.png'),
     '13d': require('../img/Icons/13d.png'),
-    '13n': require('../img/Icons/13d.png'),
+    '13n': require('../img/Icons/13n.png'),
     '50d': require('../img/Icons/50d.png'),
-    '50n': require('../img/Icons/50d.png')
+    '50n': require('../img/Icons/50n.png')
 }
 
 var moment = require('moment');

@@ -45,10 +45,10 @@ const Home = ({ navigation }) => {
                     setFlatListItems(temp.reverse());
                     setStatus(status_temp);
                     showMessage(false);
-                    show_splash(false)
                 } else {
                     showMessage(true);
                 }
+                show_splash(false)
             });
         });
     }
@@ -228,30 +228,30 @@ const Home = ({ navigation }) => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <StatusBar
                 animated={true}
-                backgroundColor="white"
-                barStyle={splash?"light-content":"dark-content"} />
+                backgroundColor={prompt ? 'rgba(0,0,0,0.5)' : "white"}
+                barStyle={splash ? "light-content" : "dark-content"} />
             <Modal
-            animationType={'fade'}
-            visible={splash}
-            transparent={true}
+                animationType={'fade'}
+                visible={splash}
+                transparent={true}
             >
-                <View style={{flex: 1, backgroundColor: "white", alignContent: "center", justifyContent: "center"}}>
+                <View style={{ flex: 1, backgroundColor: "white", alignContent: "center", justifyContent: "center" }}>
                     <Image
-                    source={require('../img/logo.png')}
-                    style={styles.splash_logo}
+                        source={require('../img/logo.png')}
+                        style={styles.splash_logo}
                     />
                     <Text style={styles.splash_name}>Grovit</Text>
                 </View>
             </Modal>
-            <View style={{flex: 10, backgroundColor: "white", width: Dimensions.get('window').width}}>
-                <WeatherHeader/>
+            <View style={{ flex: 5, backgroundColor: "white", width: Dimensions.get('window').width }}>
+                <WeatherHeader />
             </View>
             {message ?
-                <View style={{ flex: 10, alignItems: 'center' }}>
+                <View style={{ flex: 15, alignItems: 'center' }}>
                     <Text style={styles.blank_message}>Click + to add something</Text>
                 </View> :
                 <FlatList
-                    style={{ alignSelf: 'stretch', height: 540 }}
+                    style={{ alignSelf: 'stretch', height: 500 }}
                     data={flatListItems}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item, index }) => listItemView(item, index)}

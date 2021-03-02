@@ -27,7 +27,7 @@ export default StyleSheet.create({
     meta_box: {
         flexDirection: 'row',
         flex: 2,
-        margin: width/20,
+        margin: width / 20,
         marginTop: 0
     },
     meta_value: {
@@ -41,7 +41,6 @@ export default StyleSheet.create({
     },
     loader: {
         alignItems: 'center',
-        marginLeft: width / 2.5
     },
     //header end
 

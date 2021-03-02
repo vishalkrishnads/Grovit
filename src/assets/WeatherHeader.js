@@ -5,79 +5,25 @@ import GetLocation from 'react-native-get-location'
 import * as Progress from 'react-native-progress';
 import styles from '../assets/styles'
 
-const images = [
-    require('../img/Icons/01d.png'),
-    require('../img/Icons/01n.png'),
-    require('../img/Icons/02d.png'),
-    require('../img/Icons/02n.png'),
-    require('../img/Icons/03d.png'),
-    require('../img/Icons/04d.png'),
-    require('../img/Icons/09d.png'),
-    require('../img/Icons/10d.png'),
-    require('../img/Icons/10n.png'),
-    require('../img/Icons/11d.png'),
-    require('../img/Icons/13d.png'),
-    require('../img/Icons/50d.png')
-]
-
-const imageselector = (code) => {
-    var image;
-    switch (code) {
-        case '01d':
-            image = images[0]
-            break
-        case '01n':
-            image = images[1]
-            break
-        case '02d':
-            image = images[2]
-            break
-        case '02n':
-            image = images[3]
-            break
-        case '03d':
-            image = images[4]
-            break
-        case '03n':
-            image = images[4]
-            break
-        case '04d':
-            image = images[5]
-            break
-        case '04n':
-            image = images[5]
-            break
-        case '09d':
-            image = images[6]
-            break
-        case '09n':
-            image = images[7]
-            break
-        case '10d':
-            image = images[7]
-            break
-        case '10n':
-            image = images[8]
-            break
-        case '11d':
-            image = images[9]
-            break
-        case '11n':
-            image = images[9]
-            break
-        case '13d':
-            image = images[10]
-            break
-        case '13n':
-            image = images[10]
-            break
-        case '50d':
-            image = images[11]
-            break;
-        case '50n':
-            image = images[11]
-    }
-    return image
+const images = {
+   '01d': require('../img/Icons/01d.png'),
+   '01n': require('../img/Icons/01n.png'),
+   '02d': require('../img/Icons/02d.png'),
+   '02n': require('../img/Icons/02n.png'),
+   '03d': require('../img/Icons/03d.png'),
+   '03n': require('../img/Icons/03d.png'),
+   '04d': require('../img/Icons/04d.png'),
+   '04n': require('../img/Icons/04d.png'),
+   '09d': require('../img/Icons/09d.png'),
+   '09n': require('../img/Icons/10d.png'),
+   '10d': require('../img/Icons/10d.png'),
+   '10n': require('../img/Icons/10n.png'),
+   '11d': require('../img/Icons/11d.png'),
+   '11n': require('../img/Icons/11d.png'),
+   '13d': require('../img/Icons/13d.png'),
+   '13n': require('../img/Icons/13d.png'),
+   '50d': require('../img/Icons/50d.png'),
+   '50n': require('../img/Icons/50d.png')
 }
 
 var moment = require('moment');
@@ -101,7 +47,7 @@ export default WeatherHeader = () => {
                         settemp(json.current.temp)
                         sethumidity(json.current.humidity)
                         setIcon(<Image
-                            source={imageselector(json.current.weather[0].icon)}
+                            source={images[json.current.weather[0].icon]}
                             style={{ width: 120, height: 120 }}
                         />)
                         setCondition(json.current.weather[0].main)

@@ -14,7 +14,6 @@ import To_Do from './To-Do'
 import styles from '../assets/styles'
 
 const Stack = createStackNavigator();
-const height = Dimensions.get('window').height;
 var db = openDatabase({ name: 'GreenHouse.db' });
 var title = '';
 
@@ -46,7 +45,6 @@ const Home = ({ navigation }) => {
                     setFlatListItems(temp.reverse());
                     setStatus(status_temp);
                     showMessage(false);
-                    console.log("Splash screen is going")
                     show_splash(false)
                 } else {
                     showMessage(true);
@@ -245,8 +243,11 @@ const Home = ({ navigation }) => {
                     <Text style={styles.splash_name}>Grovit</Text>
                 </View>
             </Modal>
+            <View style={{flex: 10, backgroundColor: "white", width: Dimensions.get('window').width}}>
+                <WeatherHeader/>
+            </View>
             {message ?
-                <View style={{ flex: 1, alignItems: 'center' }}>
+                <View style={{ flex: 10, alignItems: 'center' }}>
                     <Text style={styles.blank_message}>Click + to add something</Text>
                 </View> :
                 <FlatList
@@ -325,8 +326,7 @@ export default HomeStack = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Home" component={Home} options={{
-                headerTitle: <WeatherHeader />,
-                headerStyle: { height: height / 4 }
+                headerShown: false
             }} />
             <Stack.Screen name="Details" component={Details} options={{
                 headerTitleAlign: 'center',

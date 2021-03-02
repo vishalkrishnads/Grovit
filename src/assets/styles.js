@@ -6,8 +6,8 @@ const height = Dimensions.get('window').height;
 export default StyleSheet.create({
 
     //header start
-    header_container: {
-        elevation: 1,
+    header_date_container: {
+        marginTop: height / 25
     },
     header_date: {
         fontSize: 18,
@@ -19,14 +19,16 @@ export default StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold'
     },
-    date_badge: {
-        marginTop: height / 40
-    },
     meta_container: {
         flex: 1,
-        marginLeft: width / 20,
-        marginBottom: 40,
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: height / 8
+    },
+    meta_box: {
+        flexDirection: 'row',
+        flex: 2,
+        margin: width/20,
+        marginTop: 0
     },
     meta_value: {
         color: 'black',
@@ -46,13 +48,13 @@ export default StyleSheet.create({
     // HOME SCREEN START    
 
     //Splash screen start
-    splash_logo:{
-        height: height/4,
-        width: width/2,
+    splash_logo: {
+        height: height / 4,
+        width: width / 2,
         alignSelf: "center"
     },
-    splash_name:{
-        fontSize: height/18,
+    splash_name: {
+        fontSize: height / 18,
         alignSelf: "center"
     },
 

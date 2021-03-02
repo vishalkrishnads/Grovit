@@ -1,29 +1,28 @@
 import React from 'react'
 import { View, Text, Image } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import GetLocation from 'react-native-get-location'
 import * as Progress from 'react-native-progress';
 import styles from '../assets/styles'
 
 const images = {
-   '01d': require('../img/Icons/01d.png'),
-   '01n': require('../img/Icons/01n.png'),
-   '02d': require('../img/Icons/02d.png'),
-   '02n': require('../img/Icons/02n.png'),
-   '03d': require('../img/Icons/03d.png'),
-   '03n': require('../img/Icons/03d.png'),
-   '04d': require('../img/Icons/04d.png'),
-   '04n': require('../img/Icons/04d.png'),
-   '09d': require('../img/Icons/09d.png'),
-   '09n': require('../img/Icons/10d.png'),
-   '10d': require('../img/Icons/10d.png'),
-   '10n': require('../img/Icons/10n.png'),
-   '11d': require('../img/Icons/11d.png'),
-   '11n': require('../img/Icons/11d.png'),
-   '13d': require('../img/Icons/13d.png'),
-   '13n': require('../img/Icons/13d.png'),
-   '50d': require('../img/Icons/50d.png'),
-   '50n': require('../img/Icons/50d.png')
+    '01d': require('../img/Icons/01d.png'),
+    '01n': require('../img/Icons/01n.png'),
+    '02d': require('../img/Icons/02d.png'),
+    '02n': require('../img/Icons/02n.png'),
+    '03d': require('../img/Icons/03d.png'),
+    '03n': require('../img/Icons/03d.png'),
+    '04d': require('../img/Icons/04d.png'),
+    '04n': require('../img/Icons/04d.png'),
+    '09d': require('../img/Icons/09d.png'),
+    '09n': require('../img/Icons/10d.png'),
+    '10d': require('../img/Icons/10d.png'),
+    '10n': require('../img/Icons/10n.png'),
+    '11d': require('../img/Icons/11d.png'),
+    '11n': require('../img/Icons/11d.png'),
+    '13d': require('../img/Icons/13d.png'),
+    '13n': require('../img/Icons/13d.png'),
+    '50d': require('../img/Icons/50d.png'),
+    '50n': require('../img/Icons/50d.png')
 }
 
 var moment = require('moment');
@@ -57,29 +56,23 @@ export default WeatherHeader = () => {
             })
             .catch(error => {
                 const { code, message } = error;
-                console.error("Location error code: "+code)
-                console.error("Location error message: "+message)
+                console.error("Location error code: " + code)
+                console.error("Location error message: " + message)
             })
     }, [])
     return (
-        <SafeAreaView style={styles.header_container}>
+        <View>
             {loaded ? <View style={{ alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', alignItems: 'flex-start', flex: 1 }}>
-                    <View style={{ flex: 1, flexDirection: 'row' }}>
-                        {/* <Image 
-                            source={{uri: icon}} 
-                            style={{width: 120, height: 120}}
-                        /> */}
+                <View style={{ flexDirection: 'row', flex: 5 }}>
+                    <View style={{ flex: 0.5 }}></View>
+                    <View style={{ flex: 10, flexDirection: 'row' }}>
                         {icon}
-                        <View style={styles.date_badge}>
-                            <View style={{ flex: 1 }}></View>
+                        <View style={styles.header_date_container}>
                             <View style={{ flex: 1 }}><Text style={styles.header_date}>{moment(new Date()).format("MMMM Do, dddd")}</Text><Text style={styles.header_weathercondition}>{Condition}</Text></View>
-                            <View style={{ flex: 1 }}></View>
                         </View>
                     </View>
-                    <View style={{ flex: 4 }}></View>
                 </View>
-                <View style={{ flexDirection: 'row', flex: 1 }}>
+                <View style={styles.meta_box}>
                     <View style={styles.meta_container}><Text style={styles.meta_value}>{humidity}%</Text><Text style={styles.meta_description}>Humidity</Text></View>
                     <View style={styles.meta_container}><Text style={styles.meta_value}>{Temperature}&deg;C</Text><Text style={styles.meta_description}>Temperature</Text></View>
                     <View style={styles.meta_container}><Text style={styles.meta_value}>{Precipitation}mm</Text><Text style={styles.meta_description}>Precipitation</Text></View>
@@ -88,6 +81,6 @@ export default WeatherHeader = () => {
                 <View style={styles.loader}>
                     <Progress.CircleSnail indeterminate={true} size={50} color={'green'} />
                 </View>}
-        </SafeAreaView>
+        </View>
     );
 }

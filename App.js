@@ -10,9 +10,9 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements'
-import HomeStack from './assets/screens/Home'
-import Tips from './assets/screens/Tips'
-import Profile from './assets/screens/Profile'
+import HomeStack from './src/screens/Home'
+import Tips from './src/screens/Tips'
+import Profile from './src/screens/Profile'
 
 const Tab = createBottomTabNavigator();
 

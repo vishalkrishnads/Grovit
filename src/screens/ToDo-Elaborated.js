@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import { Icon } from 'react-native-elements'
-import styles from '../components/styles'
+import styles from '../assets/styles'
 
 var moment = require('moment');
 

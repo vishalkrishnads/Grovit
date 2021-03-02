@@ -4,7 +4,7 @@ import { openDatabase } from 'react-native-sqlite-storage';
 import { OutlinedTextField } from 'react-native-material-textfield';
 import { Button, Icon } from 'react-native-elements';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import styles from '../components/styles'
+import styles from '../assets/styles'
 
 var moment = require('moment')
 var db = openDatabase({ name: 'GreenHouse.db' });

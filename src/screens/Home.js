@@ -4,14 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { OutlinedTextField } from 'react-native-material-textfield';
 import { Button, Icon } from 'react-native-elements';
 import { openDatabase } from 'react-native-sqlite-storage';
-import WeatherHeader from '../components/WeatherHeader'
+import WeatherHeader from '../assets/WeatherHeader'
 import Details from './Details'
 import Watering from './Watering'
 import Lighting from './Lighting'
 import Analytics from './Analytics'
 import To_Do_Elaborated from './ToDo-Elaborated'
 import To_Do from './To-Do'
-import styles from '../components/styles'
+import styles from '../assets/styles'
 
 const Stack = createStackNavigator();
 const height = Dimensions.get('window').height;

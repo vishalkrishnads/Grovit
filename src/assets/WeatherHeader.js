@@ -3,7 +3,7 @@ import { View, Text, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import GetLocation from 'react-native-get-location'
 import * as Progress from 'react-native-progress';
-import styles from '../components/styles'
+import styles from '../assets/styles'
 
 const images = [
     require('../img/Icons/01d.png'),

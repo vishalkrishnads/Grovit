@@ -3,7 +3,7 @@ import { ScrollView, View, Text, Image, TouchableOpacity, Alert, Vibration } fro
 import { createStackNavigator } from '@react-navigation/stack'
 import { Icon, Button } from 'react-native-elements'
 import { openDatabase } from 'react-native-sqlite-storage'
-import styles from '../components/styles'
+import styles from '../assets/styles'
 
 const Stack = createStackNavigator();
 var db = openDatabase({ name: 'GreenHouse.db' });

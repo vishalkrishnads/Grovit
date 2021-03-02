@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, ScrollView, Image } from 'react-native'
-import styles from '../components/styles'
+import styles from '../assets/styles'
 
 export default Tips_Elaborated = ({ route, navigation }) => {
     const { title } = route.params;

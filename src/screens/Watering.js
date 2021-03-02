@@ -4,7 +4,7 @@ import ProgressCircle from 'react-native-progress-circle';
 import * as Progress from 'react-native-progress';
 import { Icon } from 'react-native-elements';
 import { openDatabase } from 'react-native-sqlite-storage';
-import styles from '../components/styles'
+import styles from '../assets/styles'
 
 var db = openDatabase({ name: 'GreenHouse.db' });
 

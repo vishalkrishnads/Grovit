@@ -3,7 +3,7 @@ import { View, ScrollView, Text, TouchableOpacity, Switch, Alert, RefreshControl
 import { Icon } from 'react-native-elements'
 import { openDatabase } from 'react-native-sqlite-storage';
 import ProgressBar from 'react-native-progress/Bar';
-import styles from '../components/styles'
+import styles from '../assets/styles'
 
 var db = openDatabase({ name: 'GreenHouse.db' });
 

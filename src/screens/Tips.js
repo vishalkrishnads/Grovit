@@ -1,8 +1,8 @@
 import React from 'react'
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 import { createStackNavigator } from "@react-navigation/stack";
-import TIPS from '../components/Tips'
-import styles from '../components/styles'
+import TIPS from '../assets/Tips'
+import styles from '../assets/styles'
 import Tips_Elaborated from './Tips-Elaborated'
 
 const Stack = createStackNavigator();

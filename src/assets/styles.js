@@ -45,6 +45,17 @@ export default StyleSheet.create({
 
     // HOME SCREEN START    
 
+    //Splash screen start
+    splash_logo:{
+        height: height/4,
+        width: width/2,
+        alignSelf: "center"
+    },
+    splash_name:{
+        fontSize: height/18,
+        alignSelf: "center"
+    },
+
     //Add a House prompt start
     modal: {
         backgroundColor: 'rgba(0,0,0,0.5)',

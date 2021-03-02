@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Alert, Dimensions, TouchableOpacity, FlatList, Modal, Keyboard, Vibration, ImageBackground, StatusBar } from 'react-native'
+import { View, Text, Alert, Dimensions, TouchableOpacity, FlatList, Modal, Keyboard, Vibration, ImageBackground, Image, StatusBar } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import { OutlinedTextField } from 'react-native-material-textfield';
 import { Button, Icon } from 'react-native-elements';
@@ -30,11 +30,11 @@ const Home = ({ navigation }) => {
     let [error2, setError2] = React.useState('');
     let [error3, setError3] = React.useState('');
     let [ui_patch, patch_ui] = React.useState(2);
+    let [splash, show_splash] = React.useState(true)
     const ID = React.useRef(null)
     const KEY = React.useRef(null)
 
     const refresh_list = () => {
-        //refresh cheyyunnu list
         db.transaction((tx) => {
             tx.executeSql('SELECT * FROM Houses', [], (tx, results) => {
                 var temp = [];
@@ -46,6 +46,8 @@ const Home = ({ navigation }) => {
                     setFlatListItems(temp.reverse());
                     setStatus(status_temp);
                     showMessage(false);
+                    console.log("Splash screen is going")
+                    show_splash(false)
                 } else {
                     showMessage(true);
                 }
@@ -64,7 +66,6 @@ const Home = ({ navigation }) => {
                     text: 'Delete',
                     style: 'destructive',
                     onPress: () => [
-                        //delete the item from DB
                         db.transaction((tx) => {
                             tx.executeSql(
                                 'DELETE FROM Houses WHERE house_id=?',
@@ -86,7 +87,6 @@ const Home = ({ navigation }) => {
 
     const save = () => {
         Keyboard.dismiss();
-        //user input check cheyy
         if (!name || !ip || !key) {
             if (!name) {
                 setError1("Enter a Name");
@@ -118,7 +118,6 @@ const Home = ({ navigation }) => {
     }
 
     React.useEffect(() => {
-        //aadhyathe thavana table undakkan (table creation)
         db.transaction(function (txn) {
             txn.executeSql(
                 "SELECT name FROM sqlite_master WHERE type='table' AND name='Houses'",
@@ -135,7 +134,6 @@ const Home = ({ navigation }) => {
             )
         })
         const unsubscribe = navigation.addListener('focus', () => {
-            //aadhyathe pravashyam list undakkunnu
             refresh_list()
         });
         return unsubscribe;
@@ -233,7 +231,20 @@ const Home = ({ navigation }) => {
             <StatusBar
                 animated={true}
                 backgroundColor="white"
-                barStyle="dark-content" />
+                barStyle={splash?"light-content":"dark-content"} />
+            <Modal
+            animationType={'fade'}
+            visible={splash}
+            transparent={true}
+            >
+                <View style={{flex: 1, backgroundColor: "white", alignContent: "center", justifyContent: "center"}}>
+                    <Image
+                    source={require('../img/logo.png')}
+                    style={styles.splash_logo}
+                    />
+                    <Text style={styles.splash_name}>Grovit</Text>
+                </View>
+            </Modal>
             {message ?
                 <View style={{ flex: 1, alignItems: 'center' }}>
                     <Text style={styles.blank_message}>Click + to add something</Text>

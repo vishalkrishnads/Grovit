@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { openDatabase } from 'react-native-sqlite-storage';
 import { Dialogflow_V2 } from 'react-native-dialogflow';
 import SpeechAndroid from 'react-native-android-voice'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Tts from 'react-native-tts'
 import styles from '../assets/styles';
 
@@ -101,6 +102,17 @@ export default Details = ({ route, navigation }) => {
             }),
             "Date": (function run() {
                 respond(question_response.replace("date", moment(date).format("MMMM Do, dddd")))
+            }),
+            "Weather": (async function run(){
+                try {
+                    var json = await AsyncStorage.getItem('@weather')
+                    json = JSON.parse(json)
+                    const response = question_response.replace("_condition_", json.current.weather[0].main).replace("_temp_", json.current.temp).replace("_humidity_", json.current.humidity)
+                    respond(response)
+                  } catch(e) {
+                      console.error(e)
+                      respond(`Sorry. Weather info is unavailable at the moment.`)
+                  }
             })
         }
     }

@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, Image } from 'react-native'
 import GetLocation from 'react-native-get-location'
 import * as Progress from 'react-native-progress';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../assets/styles'
 
 const images = {
@@ -42,7 +43,7 @@ export default WeatherHeader = () => {
                 let url = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + location.latitude + '&lon=' + location.longitude + '&units=metric&appid=90e5ab7481cf91623139e049919e2dd2'
                 fetch(url)
                     .then((response) => response.json())
-                    .then((json) => {
+                    .then(async(json) => {
                         settemp(json.current.temp)
                         sethumidity(json.current.humidity)
                         setIcon(<Image
@@ -52,6 +53,7 @@ export default WeatherHeader = () => {
                         setCondition(json.current.weather[0].main)
                         setprecip(json.daily[0].rain)
                         changeloaded(true)
+                        await AsyncStorage.setItem('@weather', JSON.stringify(json))
                     })
             })
             .catch(error => {

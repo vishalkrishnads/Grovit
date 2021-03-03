@@ -1,7 +1,6 @@
 # Grovit
-This project combines the possibilities of IoT microcontrollers and mobile apps to make house farming and gardening a breeze for busy professionals. This README will guide you through to give you an understanding about the structure of the project, covering the basics of the cicuit and then explaining how to use this app to control the device and grow your plants. If you want to build the app from source, then please refer to the contributing guide.
+This project combines the possibilities of IoT microcontrollers, mobile apps and cloud computing services to make house farming and gardening a breeze for busy professionals. This README will guide you through to give you an understanding about the structure of the project, covering the basics of the cicuit and then explaining how to use this app to control the device and grow your plants. If you want to build the app from source, then please refer to the contributing guide.
 
-<a><img src="https://github.com/vishalkrishnads/Grovit/blob/master/.github/Screenshots/empty_home.png?raw=true" height="420" width="200" ></a>
 <a><img src="https://github.com/vishalkrishnads/Grovit/blob/master/.github/Screenshots/adding.png?raw=true" height="420" width="200" ></a>
 <a><img src="https://github.com/vishalkrishnads/Grovit/blob/master/.github/Screenshots/home.png?raw=true" height="420" width="200" ></a>
 <a><img src="https://github.com/vishalkrishnads/Grovit/blob/master/.github/Screenshots/details.png?raw=true" height="420" width="200" ></a>
@@ -10,7 +9,14 @@ This project combines the possibilities of IoT microcontrollers and mobile apps 
 ## Prerequisites
 * A smartphone running Android 8.0+
 * A good internet connection
-* Dummy credentials for ThingSpeak. If you don't wanna create an account for yourself, use our credentials:
+* Dummy credentials for a [ThingSpeak](https://thingspeak.com) channel. If you don't wanna create an account for yourself, use our credentials:
   * ID: 1371522
   * Password: FWSEJN2A2UOMPZ6H
 * Optionally, set up the cicuit as explained in the cicuits section 
+
+## Setting up the app
+1. Install the app on your android device by following this link
+2. Open it and grant all necessary permissions
+3. Add a device using the dummy credentials or by creating a ThingSpeak channel with 4 fields and then using it's credentials.
+4. Select the device that you added
+5. Now, you can interact with your device through Grovi, a virtual assistant or by directly switching values from the app.

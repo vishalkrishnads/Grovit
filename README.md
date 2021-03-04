@@ -1,5 +1,5 @@
 # Grovit
-This project combines the possibilities of IoT microcontrollers, mobile apps and cloud computing services to make house farming and gardening a breeze for busy professionals. This README will guide you through to give you an understanding about the structure of the project, covering the basics of the cicuit and then explaining how to use this app to control the device and grow your plants. If you want to build the app from source, then please refer to the contributing guide.
+This project combines the possibilities of IoT microcontrollers, mobile apps and cloud computing services to make house farming and gardening a breeze for busy professionals. This README will guide you through to give you an understanding about the structure of the project, covering the basics of the circuit and then explaining how to use this app to control the device and grow your plants. If you want to build the app from source, then please refer to the contributing guide.
 
 <a><img src="https://github.com/vishalkrishnads/Grovit/blob/master/.github/Screenshots/adding.png?raw=true" height="420" width="200" ></a>
 <a><img src="https://github.com/vishalkrishnads/Grovit/blob/master/.github/Screenshots/home.png?raw=true" height="420" width="200" ></a>
@@ -30,3 +30,16 @@ This project consists of a device equipped with moisture and light sensors with 
 
 ## Testing
 Now, you should be able to switch the Lights and water tap ON & OFF from the app itself. If you have set up the microcontrollers, once they've connected to Wi-Fi, you should be able to see the lights and water pump responding to your commands from the app.
+
+## Grovi
+Grovi is our virtual assistant built into the app itself. It can do many things such as controlling the light and water pump, tell you the weather and do much more. You can activate Grovi for each farm from within the details of that farm by clicking on the green mic button. You can ask her things like:
+* Turn on the lights
+* Take care of everything
+* What's the climate?
+
+## Features
+The app has many features to assist gardeners which includes, but is not limited to:
+1. To Do Lists
+2. Ability to add tips from expert farmers for the not-so experienced ones to follow
+3. Monthly Analytics & graphs for water usage and lighting history
+4. Ability to implement account based data saving and cloud storage within the app

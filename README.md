@@ -18,7 +18,7 @@ This project consists of a device equipped with moisture and light sensors with 
 * Optionally, set up the cicuit as explained in the cicuits section 
 
 ## Setting up the app
-1. Install the app on your android device by following this link
+1. Install the app on your android device by following [this link](https://drive.google.com/file/d/1Ok9KaMp1aSh3Tp1zmp3DB-eL4I84cjbG/view?usp=sharing) on an Android device
 2. Open it and grant all necessary permissions
 3. Add a device using the dummy credentials or by creating a ThingSpeak channel with 4 fields and then using it's credentials. While creating a channel, please follow the same pattern as that of our [demo channel](https://thingspeak.com/channels/1315722).
 4. Select the device that you added

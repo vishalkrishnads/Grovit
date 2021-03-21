@@ -23,6 +23,7 @@ This project consists of a device equipped with moisture and light sensors with 
 3. Add a device using the dummy credentials or by creating a ThingSpeak channel with 4 fields and then using it's credentials. While creating a channel, please follow the same pattern as that of our [demo channel](https://thingspeak.com/channels/1315722).
 4. Select the device that you added
 5. Now, you can interact with your device through Grovi, a virtual assistant or by directly switching values from the app.
+If you want way more granular control over the app or want to build it from source, check out the [directory structure & contribution guide](https://github.com/vishalkrishnads/Grovit/blob/master/.github/Code%20Structure.md).
 
 ## Setting up your microcontrollers (optional)
 1. Complete the connections as per the circuit diagram and upload the `NodeMCU.ino` found in the `controllers/` directory in this repo. If you're using Arduino to power the relay, upload `Arduino.ino` to the arduino too.

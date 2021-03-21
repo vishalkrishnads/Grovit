@@ -5,9 +5,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { openDatabase } from 'react-native-sqlite-storage';
 import { Dialogflow_V2 } from 'react-native-dialogflow';
 import SpeechAndroid from 'react-native-android-voice'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Tts from 'react-native-tts'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../assets/styles';
+import actions from '../assets/Grovi_actions'
 
 var moment = require('moment');
 var db = openDatabase({ name: 'GreenHouse.db' });
@@ -51,47 +52,7 @@ export default Details = ({ route, navigation }) => {
     let [apikey, setapikey] = React.useState('')
     let [id, setid] = React.useState('')
     const Grovi = {
-        "actions": {
-            "Lights ON": [{
-                "field": '2',
-                "value": '1',
-                "error": `Oops! I couldn't turn ON the lights. Please check your connection.`
-            }],
-            "Lights OFF": [{
-                "field": '2',
-                "value": '0',
-                "error": `Oh, no! I couldn't turn OFF the lights. Please check your connection.`
-            }],
-            "Lights Auto": [{
-                "field": '2',
-                "value": '0.5',
-                "error": `Uh, Oh! I couldn't put the lights in Auto mode. Please check your connection`
-            }],
-            "Water ON": [{
-                "field": '1',
-                "value": '1',
-                "error": `Oops! I couldn't open your tap. Please check your connection.`
-            }],
-            "Water OFF": [{
-                "field": '1',
-                "value": '0',
-                "error": `Oh no! I couldn't close your tap. Please check your connection. If the device is leaking water, please cut power immediately`
-            }],
-            "Water Auto": [{
-                "field": '1',
-                "value": '0.5',
-                "error": `Uh, oh! I couldn't switch your tap to Auto mode. Please check your connection.`
-            }],
-            "Everything": [{
-                "field": '1',
-                "value": '0.5',
-                "error": `Uh, oh! I couldn't switch your tap to Auto mode. Please check your connection.`
-            }, {
-                "field": '2',
-                "value": '0.5',
-                "error": `Uh, Oh! I couldn't put the lights in Auto mode. Please check your connection`
-            }]
-        },
+        "actions": actions,
         "questions": {
             "Level": (function run() {
                 fetch(`https://api.thingspeak.com/channels/${id}/fields/3/last.json?api_key=${apikey}`)
@@ -103,16 +64,16 @@ export default Details = ({ route, navigation }) => {
             "Date": (function run() {
                 respond(question_response.replace("date", moment(date).format("MMMM Do, dddd")))
             }),
-            "Weather": (async function run(){
+            "Weather": (async function run() {
                 try {
                     var json = await AsyncStorage.getItem('@weather')
                     json = JSON.parse(json)
-                    const response = question_response.replace("_condition_", json.current.weather[0].main).replace("_temp_", json.current.temp).replace("_humidity_", json.current.humidity)
-                    respond(response)
-                  } catch(e) {
-                      console.error(e)
-                      respond(`Sorry. Weather info is unavailable at the moment.`)
-                  }
+                    console.log(question_response.replace("_condition_", json.current.weather[0].main).replace("_temp_", json.current.temp).replace("_humidity_", json.current.humidity))
+                    respond(question_response.replace("_condition_", json.current.weather[0].main).replace("_temp_", json.current.temp).replace("_humidity_", json.current.humidity))
+                } catch (e) {
+                    console.error(e)
+                    respond(`Sorry. Weather info is unavailable at the moment.`)
+                }
             })
         }
     }
@@ -151,7 +112,7 @@ export default Details = ({ route, navigation }) => {
             Dialogflow_V2.requestQuery(
                 spoken,
                 result => speak(result),
-                error => console.log(error)
+                error => console.error(error)
             );
         } catch (error) {
             show_modal(false)
@@ -160,8 +121,6 @@ export default Details = ({ route, navigation }) => {
     const respond = (message) => { set_response(message); Tts.speak(message) }
     const speak = (response) => {
         if (response.queryResult.fulfillmentText) {
-            console.log(`Response: ${response.queryResult.fulfillmentText}`)
-            console.warn(`Intent triggered is ${response.queryResult.intent.displayName}`)
             if (Grovi.actions.hasOwnProperty(response.queryResult.intent.displayName)) {
                 for (const each of Grovi.actions[response.queryResult.intent.displayName]) {
                     fetch(`https://api.thingspeak.com/update?api_key=${apikey}&field${each.field}=${each.value}`)

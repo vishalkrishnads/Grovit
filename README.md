@@ -7,7 +7,7 @@ This project combines the possibilities of IoT microcontrollers, mobile apps and
 <a><img src="https://github.com/vishalkrishnads/Grovit/blob/master/.github/Screenshots/watering.png?raw=true" height="420" width="200" ></a>
 
 ## Disclaimer
-This software was developed for the CSI InApp International Project Awards 2021 being conducted in partnership with the Kerala Technological University. If you're a judge of the competition and are visiting this repo for jusging, kindly note the following:
+This software was developed for the CSI InApp International Project Awards 2021 being conducted in partnership with the Kerala Technological University. If you're a judge of the competition and are visiting this repo for judging, kindly note the following:
 * Although this is open to outsiders to contribute via GitHub, it should be noted that we as a team, haven't received and/or accepted any contributions for this repo as of now. All pull requests, whether open or closed, can be viewed by going to the [Pull Requests](https://github.com/vishalkrishnads/Grovit/pulls) tab of this repo. 
 * We have abided by the rules of the competition and haven't changed and/or improved anything on or after the last date for the submission of abstracts, 10th April, 2021. All the commits of this repo are available [here](https://github.com/vishalkrishnads/Grovit/commits/master) to check. You can also directly go to the commits page of this repo to check yourself, if you prefer.
 

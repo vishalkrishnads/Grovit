@@ -1,4 +1,5 @@
 # Grovit
+### [Get the app](https://drive.google.com/file/d/1Ok9KaMp1aSh3Tp1zmp3DB-eL4I84cjbG/view?usp=sharing)
 This project combines the possibilities of IoT microcontrollers, mobile apps and cloud computing services to make house farming and gardening a breeze for busy professionals. This README will guide you through to give you an understanding about the structure of the project, covering the basics of the circuit and then explaining how to use this app to control the device and grow your plants. If you want to build the app from source, then please refer to the contributing guide.
 
 <a><img src="https://github.com/vishalkrishnads/Grovit/blob/master/.github/Screenshots/adding.png?raw=true" height="420" width="200" ></a>

@@ -26,7 +26,7 @@ This project consists of a device equipped with moisture and light sensors with 
 If you want way more granular control over the app or want to build it from source, check out the [directory structure & contribution guide](https://github.com/vishalkrishnads/Grovit/blob/master/.github/Code%20Structure.md).
 
 ## Setting up your microcontrollers (optional)
-1. Complete the connections as per the circuit diagram and upload the `NodeMCU.ino` found in the `controllers/` directory in this repo. If you're using Arduino to power the relay, upload `Arduino.ino` to the arduino too.
+1. Complete the connections as per the circuit guide and upload the `microcontroller.ino` found in the `microcontroller/` directory in this repo.
 2. Power up the cicuit
 
 ## Testing

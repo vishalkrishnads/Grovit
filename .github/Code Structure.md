@@ -93,7 +93,7 @@ This repo is structured in the following way:
 |    |--Screenshots: screenshots for docs
 |    |--...extra docs
 |
-|--android: android build files
+|-- microcontroller: firmware for the device's hardware
 |
 |-- src
 |    |

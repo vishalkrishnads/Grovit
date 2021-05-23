@@ -19,7 +19,7 @@ This project consists of a device equipped with moisture and light sensors with 
 * A smartphone running Android 8.0+
 * A good internet connection
 * Dummy credentials for a [ThingSpeak](https://thingspeak.com) channel. If you don't wanna create an account for yourself, use our credentials:
-  * ID: 1371522
+  * ID: 1315722
   * Password: FWSEJN2A2UOMPZ6H
 * Optionally, set up the cicuit as explained in the cicuits section 
 
